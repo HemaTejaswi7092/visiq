@@ -38,7 +38,7 @@ multidict==6.7.1
 narwhals==2.20.0
 networkx==3.6.1
 numpy==2.4.4
-opencv-python==4.13.0.92
+opencv-python-headless==4.13.0.92
 opencv-python-headless==4.13.0.92
 packaging==26.1
 pandas==3.0.2
