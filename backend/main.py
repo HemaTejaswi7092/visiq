@@ -86,41 +86,38 @@ def preprocess_image(image_array):
     return enhanced
 
 # ── PROMPT ──
-SYSTEM_PROMPT = """You are an expert industrial quality control engineer with 20+ years of experience inspecting circuit boards, PCBs, semiconductors, wafers, and manufactured products.
+SYSTEM_PROMPT = """You are VISIQ, an expert industrial visual inspection AI with deep knowledge of electronics, medical imaging, and manufacturing components.
 
-Analyze the image and respond ONLY with a valid JSON object. No markdown, no backticks, no text outside JSON.
+Analyze the image and respond ONLY with valid JSON — no markdown, no explanation, no code fences:
 
-Use exactly this structure:
 {
+  "component_type": "<what this is, e.g. 'PCB Motherboard', 'Intel CPU Die', 'Semiconductor Wafer', 'Chest X-Ray', 'Soldered Circuit Board', 'GPU Chip', 'Memory Module'>",
+  "component_info": "<1-2 sentences about what this component is, what it does, and where it is commonly used>",
   "verdict": "APPROVED" | "DEFECTIVE" | "REVIEW",
-  "confidence": <integer 0-100>,
   "quality_score": <integer 0-100>,
-  "material_type": "<what this item is>",
-  "summary": "<one sentence expert summary>",
-  "overall_risk": "HIGH" | "MEDIUM" | "LOW",
-  "estimated_remaining_life": "<estimated lifespan if defects not addressed>",
+  "summary": "<1-2 sentence overall assessment>",
   "defects": [
     {
-      "label": "<defect name>",
-      "severity": "critical" | "major" | "minor",
-      "description": "<technical description>",
-      "location": "<where on image>",
-      "damage_if_ignored": "<what damage occurs if not fixed>",
-      "progression_timeline": "<realistic timeline from now to failure>",
-      "safety_risk": "HIGH" | "MEDIUM" | "LOW",
-      "financial_impact": "<cost of fixing now vs ignoring>",
-      "urgency": "IMMEDIATE" | "SCHEDULE" | "MONITOR"
+      "name": "<defect name>",
+      "severity": "LOW" | "MEDIUM" | "HIGH" | "CRITICAL",
+      "location": "<where on the image>",
+      "description": "<what it looks like>",
+      "damage_if_ignored": "<what will happen if not fixed>",
+      "progression_timeline": "<how fast it worsens>",
+      "safety_risk": "<safety implications>",
+      "financial_impact": "<cost/loss implications>",
+      "urgency": "MONITOR" | "SCHEDULE_REPAIR" | "IMMEDIATE_ACTION"
     }
   ],
-  "recommendations": ["<action 1>", "<action 2>", "<action 3>"]
+  "recommendations": ["<action 1>", "<action 2>"]
 }
 
 Rules:
-- APPROVED: quality_score >= 80, no critical defects
-- REVIEW: quality_score 50-79, minor defects only
-- DEFECTIVE: quality_score < 50, or any critical/major defects
-- Be specific and technical in all fields
-- If no defects found, return empty defects array"""
+- verdict = APPROVED if score >= 85 and no HIGH/CRITICAL defects
+- verdict = REVIEW if score 60-84 or only LOW/MEDIUM defects  
+- verdict = DEFECTIVE if score < 60 or any HIGH/CRITICAL defect
+- If no defects found, return empty defects array and verdict APPROVED
+- Always identify the component even if image quality is poor"""
 
 # ── ANALYZE ──
 @app.post("/analyze")
