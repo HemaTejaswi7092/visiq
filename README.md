@@ -1,22 +1,41 @@
 # ⬡ VISIQ — Intelligent Visual Inspection System
 
-> AI-powered defect detection for PCBs, circuit boards, wafers, and industrial components.
+![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-Llama%204%20Scout-F55036)
+![OpenCV](https://img.shields.io/badge/OpenCV-Preprocessing-5C3EE8?logo=opencv&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-🔗 **Live Demo:** [visiq.vercel.app](https://visiq.vercel.app) *(coming soon)*
+AI-powered defect detection for PCBs, circuit boards, wafers, and industrial components — combining an OpenCV preprocessing pipeline with Groq Vision AI to deliver structured inspection reports with risk and severity scoring.
+
+**[🚀 Try the live demo →](https://visiq-frontend.vercel.app)**
+
+<!-- 📸 Add a screenshot or GIF of the dashboard/inspection flow here, e.g.:
+![VISIQ Demo](assets/visiq-demo.gif)
+-->
+
+---
+
+## Table of Contents
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Run Locally](#-how-to-run-locally)
+- [API Endpoints](#-api-endpoints)
+- [Sample Output](#-sample-output)
 
 ---
 
 ## ✨ Features
 
-- **AI Defect Analysis** — Groq Vision AI (Llama 4 Scout) detects scratches, cracks, corrosion, solder bridges, burn marks, and more
-- **OpenCV Preprocessing Pipeline** — Denoising → Sharpening → CLAHE contrast enhancement before AI analysis
-- **Damage Progression Risk Assessment** — Per-defect failure timeline, safety risk, financial impact, and urgency level
-- **Live Camera Mode** — Capture directly from webcam for real-time inspection
-- **PDF Report Export** — Professional inspection reports with full defect breakdown
-- **Inspection History** — SQLite database tracking all past inspections
-- **Stats Dashboard** — Total inspections, pass rate, average quality score
-
----
+| | |
+|---|---|
+| 🔍 **AI Defect Analysis** | Groq Vision AI (Llama 4 Scout) detects scratches, cracks, corrosion, solder bridges, burn marks, and more |
+| 🎛️ **OpenCV Preprocessing** | Denoising → sharpening → CLAHE contrast enhancement before AI analysis |
+| ⚠️ **Risk Assessment** | Per-defect failure timeline, safety risk, financial impact, and urgency level |
+| 📷 **Live Camera Mode** | Capture directly from webcam for real-time inspection |
+| 📄 **PDF Report Export** | Professional inspection reports with full defect breakdown |
+| 🗄️ **Inspection History** | SQLite database tracking all past inspections |
+| 📊 **Stats Dashboard** | Total inspections, pass rate, average quality score |
 
 ## 🛠 Tech Stack
 
@@ -28,31 +47,26 @@
 | Image Processing | OpenCV (denoise + sharpen + CLAHE) |
 | Database | SQLite |
 | PDF Generation | ReportLab |
-| Deployment | Vercel (frontend) · Render (backend) |
-
----
+| Deployment | Vercel (frontend) · Railway (backend) |
 
 ## 🚀 How to Run Locally
 
-### Backend
-```bash
+**Backend**
+\`\`\`bash
 cd backend
 pip install fastapi uvicorn groq opencv-python-headless reportlab pillow python-multipart
 export GROQ_API_KEY=your_groq_api_key_here
 uvicorn main:app --reload
-```
-Backend runs at `http://localhost:8000`
-API docs at `http://localhost:8000/docs`
+\`\`\`
+Runs at `http://localhost:8000` · API docs at `http://localhost:8000/docs`
 
-### Frontend
-```bash
+**Frontend**
+\`\`\`bash
 cd frontend
 npm install
 npm start
-```
-Frontend runs at `http://localhost:3000`
-
----
+\`\`\`
+Runs at `http://localhost:3000`
 
 ## 📡 API Endpoints
 
@@ -64,11 +78,9 @@ Frontend runs at `http://localhost:3000`
 | GET | `/stats` | Total inspections, pass rate, avg score |
 | GET | `/health` | Health check |
 
----
-
 ## 📊 Sample Output
 
-```json
+\`\`\`json
 {
   "verdict": "DEFECTIVE",
   "quality_score": 42,
@@ -86,13 +98,9 @@ Frontend runs at `http://localhost:3000`
     }
   ]
 }
-```
+\`\`\`
 
 ---
 
-## 👤 Author
-
-**Hema Tejaswi Manchikalapudi**  
-MS Computer Science @ UCF | OPT Work Authorized  
-📧 mht151103@gmail.com  
-🔗 [LinkedIn](https://linkedin.com/in/hematejaswimanchikalapudi) · [GitHub](https://github.com/HemaTejaswi7092)
+**Built by [Hema Tejaswi Manchikalapudi](https://github.com/HemaTejaswi7092)** · MS CS @ UCF
+📧 mht151103@gmail.com · [LinkedIn](https://www.linkedin.com/in/hematejaswimanchikalapudi)
