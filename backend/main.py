@@ -65,7 +65,7 @@ def save_inspection(filename, result, processing_time):
         result.get("verdict"),
         result.get("quality_score"),
         len(result.get("defects", [])),
-        result.get("material_type"),
+        result.get("component_type"),
         result.get("summary"),
         processing_time
     ))
@@ -181,6 +181,7 @@ async def analyze_image(file: UploadFile = File(...)):
 
     return {
         **result,
+        "material_type": result.get("component_type"),
         "defect_count": len(result.get("defects", [])),
         "severity_counts": severity_counts,
         "image_size": {"width": w, "height": h},
@@ -201,7 +202,7 @@ def get_history():
     conn.close()
     keys = ["id","timestamp","filename","verdict","quality_score",
             "defect_count","material_type","summary","processing_time_ms"]
-    return [dict(zip(keys, r)) for r in rows]
+    return {"inspections": [dict(zip(keys, r)) for r in rows]}
 
 # ── STATS ──
 @app.get("/stats")
@@ -220,7 +221,7 @@ def get_stats():
     avg_score = c.fetchone()[0] or 0
     conn.close()
     return {
-        "total": total,
+        "total_inspections": total,
         "approved": approved,
         "defective": defective,
         "review": review,
